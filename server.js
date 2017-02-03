@@ -44,6 +44,12 @@ app.get('/api/waitingList', function(req, res) {
 	res.send(waitingList);
 });
 
+// when clearTables is visited, it clears tables and waitingList
+app.post('/clearTables', function(req, res) {
+	tables = [];
+	waitingList = [];
+});
+
 
 app.post('/makeReservation', function(req, res) {
 	if (tables.length < 5) {
