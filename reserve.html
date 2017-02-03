@@ -9,6 +9,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </head>
+
+<style type="text/css">
+  body {
+    background-image: url("http://data.whicdn.com/images/151886703/large.gif");
+}
+</style>
+
+
 <body>
 
   <div class="container">
@@ -17,6 +25,7 @@
       <h3>The greatest pizza a guy with a girl name can make!</h3>
       <hr>
       <a href="/add"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-list-alt"></span>View Tables</button></a>
+       <a href="/add"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></button></a>
     </div>
     <div class="row">
 
@@ -35,18 +44,18 @@
               </div>
 
               <div class="form-group">
-                <label for="role">Phone Number</label>
-                <input type="text" class="form-control" id="role">
+                <label for="number">Phone Number</label>
+                <input type="text" class="form-control" id="number">
               </div>
 
               <div class="form-group">
-                <label for="age">Email</label>
-                <input type="text" class="form-control" id="age">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email">
               </div>
 
               <div class="form-group">
-                <label for="force-points">Unique ID</label>
-                <input type="text" class="form-control" id="force-points">
+                <label for="unique-id">Unique ID</label>
+                <input type="text" class="form-control" id="unique">
               </div>
 
             </form>
@@ -60,26 +69,26 @@
       </div>
     </div>
   </div>
+<script type="text/javascript">
+   $("#add-btn").on("click", function(event) {
+     event.preventDefault();
+     var table = {
+       name: $("#name").val().trim(),
+       phone: $("#phone").val().trim(),
+       email: $("#email").val().trim(),
+       unique: $("#unique").val().trim()
+     };
 
-  <script type="text/javascript">
-    // Question: What does this code do?
-    $("#add-btn").on("click", function(event) {
-      // event.preventDefault();
-      var newCharacter = {
-        name: $("#name").val().trim(),
-        phoneNumber: $("#role").val().trim(),
-        email: $("#age").val().trim(),
-        unique_id: $("#force-points").val().trim()
-      };
-
-      // Question: What does this code do??
-      $.post("/api/new", newCharacter)
-      .done(function(data) {
-        console.log(data);
-        alert("Adding character...");
-      });
-    });
-  </script>
-
+     $.post("/makeReservation", table)
+     .done(function(data) {
+       if(Reservations){
+         alert("you got a table")
+       }
+       else{
+         alert("you are on waiting list")
+       }
+     });
+   });
+ </script>
 </body>
 </html>
