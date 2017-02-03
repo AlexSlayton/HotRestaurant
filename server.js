@@ -2,6 +2,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var mysql = require('mysql');
 
 // create the express server and assign the port
 var app = express();
