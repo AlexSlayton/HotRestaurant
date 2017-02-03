@@ -70,25 +70,29 @@
     </div>
   </div>
 <script type="text/javascript">
-   $("#add-btn").on("click", function(event) {
-     event.preventDefault();
+   $(document).on("click", '#add-btn', function() {
+    console.log("submit was clicked!");
      var table = {
        name: $("#name").val().trim(),
-       phone: $("#phone").val().trim(),
+       phone: $("#number").val().trim(),
        email: $("#email").val().trim(),
        unique: $("#unique").val().trim()
      };
-
-     $.post("/makeReservation", table)
-     .done(function(data) {
-       if(Reservations){
-         alert("you got a table")
+     var currentURL = window.location.origin;
+     $.post(currentURL + "/makeReservation", table, function(data) {
+       if(data.reservation != undefined){
+         alert("you got a table");
        }
-       else{
-         alert("you are on waiting list")
+       else if (data.waiting != undefined) {
+         alert("you are on waiting list");
        }
      });
-   });
+      $("#name").val("");
+      $("#number").val("");
+      $("#email").val("");
+      $("#unique").val("");
+      return false;
+    });
  </script>
 </body>
 </html>

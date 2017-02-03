@@ -84,18 +84,20 @@ app.post('/clearTables', function(req, res) {
 
 
 app.post('/makeReservation', function(req, res) {
-	connection.query('SELECT COUNT(*) as count FROM tables', function(err, result) {
+	connection.query('SELECT COUNT(reservation_id) as count FROM tables', function(err, result) {
 		if (err) {
 			throw err;
 		}
+		console.log(req.body);
 		if (parseInt(result[0].count) < 5) {
-			connection.query('INSERT INTO tables (name, phone_number, email, unique_id) VALUES (?, ?, ?, ?)', [res.name, res.phoneNumber, res.email, res.unique_id], function(err, insertResult) {
-				console.log("Added your reservation");
+			connection.query('INSERT INTO tables (name, phone_number, email, unique_id) VALUES (?, ?, ?, ?)', [req.body.name, req.body.phone, req.body.email, req.body.unique], function(err, insertResult) {
+				res.send({reservation: "reservation"});
 			});
 		}
 		else {
-			connection.query('INSERT INTO waitingList (name, phone_number, email, unique_id) VALUES (?, ?, ?, ?)', [res.name, res.phoneNumber, res.email, res.unique_id], function(err, insertResult) {
+			connection.query('INSERT INTO waitingList (name, phone_number, email, unique_id) VALUES (?, ?, ?, ?)', [req.body.name, req.body.phone, req.body.email, req.body.unique], function(err, insertResult) {
 				console.log("Added your name to the waiting list");
+				res.send({waiting: "waiting"});
 			});	
 		}
 		console.log(result);
