@@ -13,13 +13,13 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json"}));
 
-var tables = [{
+var tables = [
 	
-}];
+];
 
-var waitingList = [{
+var waitingList = [
 
-}];
+];
 
 // when this route is visited, send the browser to HotRestaurant/index.html
 app.get('/', function(req, res) {
@@ -40,7 +40,7 @@ app.get('/api/tables', function(req, res) {
 });
 
 // when /api/waitingList is visited, display the waiting list array
-app.get('api/waitingList', function(req, res) {
+app.get('/api/waitingList', function(req, res) {
 	res.send(waitingList);
 });
 
