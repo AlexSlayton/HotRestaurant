@@ -14,6 +14,17 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json"}));
 
+// create the connection to the SQL server
+var connection = mysql.createConnection({
+	host: 'localhost',
+	user: 'root',
+	password: 'TeOtAuY16!',
+	database: 'hotRestaurant'
+});
+
+// connect to the server
+connection.connect();
+
 var tables = [
 	
 ];
@@ -37,32 +48,71 @@ app.get('/tables', function(req, res) {
 
 // when /api/tables is visited, display the tables array
 app.get('/api/tables', function(req, res) {
-	res.send(tables);
+	connection.query('SELECT * FROM tables', function(err, result) {
+		if (err) {
+			throw err;
+		}
+		res.send(result);
+	});
 });
 
 // when /api/waitingList is visited, display the waiting list array
 app.get('/api/waitingList', function(req, res) {
-	res.send(waitingList);
+	connection.quer('SELECT * FROM waitingList', function(err, result) {
+		if (err) {
+			throw err;
+		}
+		res.send(result);
+	});
 });
 
 // when clearTables is visited, it clears tables and waitingList
 app.post('/clearTables', function(req, res) {
-	tables = [];
-	waitingList = [];
+	connection.query('DELETE FROM tables', function(err, result) {
+		if (err) {
+			throw err;
+		}
+		console.log("Cleared the Reservation table :D");
+	});
+	connection.query('DELETE FROM waitingList', function(err, result) {
+		if (err) {
+			throw err;
+		}
+		console.log("Cleared the Waiting List table :D");
+	});
 });
 
 
 app.post('/makeReservation', function(req, res) {
-	if (tables.length < 5) {
+	connection.query('SELECT COUNT(*) as count FROM tables', function(err, result) {
+		if (err) {
+			throw err;
+		}
+		if (parseInt(result[0].count) < 5) {
+			connection.query('INSERT INTO tables (name, phone_number, email, unique_id) VALUES (?, ?, ?, ?)', [res.name, res.phoneNumber, res.email, res.unique_id], function(err, insertResult) {
+				console.log("Added your reservation");
+			});
+		}
+		else {
+			connection.query('INSERT INTO waitingList (name, phone_number, email, unique_id) VALUES (?, ?, ?, ?)', [res.name, res.phoneNumber, res.email, res.unique_id], function(err, insertResult) {
+				console.log("Added your name to the waiting list");
+			});	
+		}
+		console.log(result);
+	});
+	/*if (tables.length < 5) {
 		var newTable = req.body;
 		tables.push(newTable);
-		res.send(tables);
+		res.send({
+			reservation: tables
+		});
 	}
 	else {
 		var newWaitingList = req.body;
 		waitingList.push(newWaitingList);
-		res.send(waitingList);
-	}
+		res.send({
+			waitingList: waitingList});
+		}*/
 });
 
 

@@ -64,12 +64,12 @@
   <script type="text/javascript">
     // Question: What does this code do?
     $("#add-btn").on("click", function(event) {
-      event.preventDefault();
+      // event.preventDefault();
       var newCharacter = {
         name: $("#name").val().trim(),
-        role: $("#role").val().trim(),
-        age: $("#age").val().trim(),
-        forcePoints: $("#force-points").val().trim()
+        phoneNumber: $("#role").val().trim(),
+        email: $("#age").val().trim(),
+        unique_id: $("#force-points").val().trim()
       };
 
       // Question: What does this code do??
