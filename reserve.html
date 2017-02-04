@@ -20,12 +20,12 @@
 <body>
 
   <div class="container">
-     <div class="jumbotron">
+     <div class="jumbotron" style="text-align: center;">
       <h1>Amy's Pizza</h1>
       <h3>The greatest pizza a guy with a girl name can make!</h3>
       <hr>
-      <a href="/add"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-list-alt"></span>View Tables</button></a>
-       <a href="/add"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></button></a>
+      <a href="/tables"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-list-alt"></span> View Tables</button></a>
+       <a href="/"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span></button></a>
     </div>
     <div class="row">
 
@@ -68,7 +68,13 @@
 
       </div>
     </div>
-  </div>
+  
+  <footer class="footer">
+    <div class="container">
+      <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitingList">API Waitlist</a></p>
+    </div>
+  </footer>
+</div>
 <script type="text/javascript">
    $(document).on("click", '#add-btn', function() {
     console.log("submit was clicked!");

@@ -18,7 +18,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json"}));
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'TeOtAuY16!',
+	password: 'secret',
 	database: 'hotRestaurant'
 });
 
@@ -58,7 +58,7 @@ app.get('/api/tables', function(req, res) {
 
 // when /api/waitingList is visited, display the waiting list array
 app.get('/api/waitingList', function(req, res) {
-	connection.quer('SELECT * FROM waitingList', function(err, result) {
+	connection.query('SELECT * FROM waitingList', function(err, result) {
 		if (err) {
 			throw err;
 		}
@@ -84,7 +84,7 @@ app.post('/clearTables', function(req, res) {
 
 
 app.post('/makeReservation', function(req, res) {
-	connection.query('SELECT COUNT(reservation_id) as count FROM tables', function(err, result) {
+	connection.query('SELECT COUNT(unique_id) as count FROM tables', function(err, result) {
 		if (err) {
 			throw err;
 		}
@@ -100,21 +100,7 @@ app.post('/makeReservation', function(req, res) {
 				res.send({waiting: "waiting"});
 			});	
 		}
-		console.log(result);
 	});
-	/*if (tables.length < 5) {
-		var newTable = req.body;
-		tables.push(newTable);
-		res.send({
-			reservation: tables
-		});
-	}
-	else {
-		var newWaitingList = req.body;
-		waitingList.push(newWaitingList);
-		res.send({
-			waitingList: waitingList});
-		}*/
 });
 
 
